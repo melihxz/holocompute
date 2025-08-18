@@ -2,10 +2,6 @@
 
 A distributed memory + compute virtualization layer that turns a set of heterogeneous devices into one logical "personal supercomputer."
 
-## Repository
-
-This repository has moved to [github.com/melihxz/holocompute](https://github.com/melihxz/holocompute).
-
 ## Features
 
 - **Unified memory**: Expose a large, cluster-wide virtual memory space
