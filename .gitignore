@@ -1,0 +1,47 @@
+# Binaries
+bin/
+holo
+
+# Build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Data directories
+data/
+*.dat
+
+# Configuration
+config.yaml
+
+# Logs
+*.log
+
+# Test coverage
+coverage.txt
+coverage.html
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+
+# Go workspace
+go.work
+go.work.sum
+
+# Docker
+.dockerignore
+
+# GitHub
+.github/

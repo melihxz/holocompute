@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  node1:
+    build: .
+    ports:
+      - "8443:8443"
+    environment:
+      - HOLO_NODE_ID=node1
+      - HOLO_LISTEN_ADDR=0.0.0.0:8443
+      - HOLO_PUBLIC_ADDR=node1:8443
+    volumes:
+      - ./data/node1:/data
+    networks:
+      - holocompute
+
+  node2:
+    build: .
+    ports:
+      - "8444:8443"
+    environment:
+      - HOLO_NODE_ID=node2
+      - HOLO_LISTEN_ADDR=0.0.0.0:8443
+      - HOLO_PUBLIC_ADDR=node2:8443
+      - HOLO_BOOTSTRAP_NODES=node1:8443
+    volumes:
+      - ./data/node2:/data
+    networks:
+      - holocompute
+    depends_on:
+      - node1
+
+  node3:
+    build: .
+    ports:
+      - "8445:8443"
+    environment:
+      - HOLO_NODE_ID=node3
+      - HOLO_LISTEN_ADDR=0.0.0.0:8443
+      - HOLO_PUBLIC_ADDR=node3:8443
+      - HOLO_BOOTSTRAP_NODES=node1:8443
+    volumes:
+      - ./data/node3:/data
+    networks:
+      - holocompute
+    depends_on:
+      - node1
+
+networks:
+  holocompute:
+    driver: bridge

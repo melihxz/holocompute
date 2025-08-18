@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package holocompute.proto;
+
+option go_package = "github.com/melihxz/holocompute/pkg/proto";
+
+// Control plane messages
+message ControlHello {
+  string node_id = 1;
+  NodeCapabilities caps = 2;
+  bytes pubkey = 3;
+  bytes pq_pubkey = 4;
+}
+
+message NodeCapabilities {
+  int32 cpu_cores = 1;
+  int64 memory_bytes = 2;
+  bool has_gpu = 3;
+  repeated string tags = 4;
+}
+
+message ClusterState {
+  uint64 raft_term = 1;
+  map<string, Ring> rings = 2;
+  map<string, ShardAssignment> shard_assignments = 3;
+  uint64 epoch = 4;
+}
+
+message Ring {
+  string resource_class = 1;
+  repeated RingNode nodes = 2;
+}
+
+message RingNode {
+  string node_id = 1;
+  double weight = 2;
+}
+
+message ShardAssignment {
+  string array_id = 1;
+  int32 page_id = 2;
+  string owner_node_id = 3;
+}
+
+// Data plane messages
+message PageRequest {
+  string array_id = 1;
+  int32 page_id = 2;
+  int64 want_version = 3;
+}
+
+message PageResponse {
+  enum Status {
+    OK = 0;
+    NOT_FOUND = 1;
+    VERSION_MISMATCH = 2;
+  }
+  
+  Status status = 1;
+  int64 version = 2;
+  bytes checksum = 3;
+  Encoding encoding = 4;
+  bytes payload = 5;
+}
+
+enum Encoding {
+  RAW = 0;
+  LZ4 = 1;
+  ZSTD = 2;
+}
+
+message LeaseRequest {
+  enum Kind {
+    READ = 0;
+    WRITE = 1;
+  }
+  
+  string array_id = 1;
+  int32 page_id = 2;
+  Kind kind = 3;
+}
+
+message LeaseGrant {
+  string lease_id = 1;
+  int64 ttl_ms = 2;
+}
+
+message TaskSubmit {
+  string task_id = 1;
+  bytes wasm_mod_sha = 2;
+  map<string, string> inputs_ref = 3;
+  ResourceHints resource_hints = 4;
+}
+
+message ResourceHints {
+  int32 cpu = 1;
+  bool gpu = 2;
+  int32 memory_mb = 3;
+}
+
+message TaskResult {
+  string task_id = 1;
+  TaskStatus status = 2;
+  map<string, string> outputs_ref = 3;
+  string logs = 4;
+}
+
+enum TaskStatus {
+  PENDING = 0;
+  RUNNING = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+  TIMEOUT = 4;
+}
