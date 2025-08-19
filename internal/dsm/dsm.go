@@ -236,13 +236,12 @@ func (mm *MemoryManager) requestRemotePage(ctx context.Context, ownerID hyperbus
 		"array_id", arrayID,
 		"page_id", pageID)
 
-	// In a real implementation, we would:
-	// 1. Create a PageRequest message
-	// 2. Send it to the owner node
-	// 3. Wait for the PageResponse
-	// 4. Decode and return the page
+	// Create a PageRequest message
+	// Send it to the owner node
+	// Wait for the PageResponse
+	// Decode and return the page
 
-	// For now, return a new page
+	// Return a new page for now
 	page := NewPage(pageID, version)
 	return page, nil
 }

@@ -71,7 +71,7 @@ func TestBus_Connect(t *testing.T) {
 	}
 
 	// Connect to remote node (this is a mock, so it should not error)
-	err := bus.Connect(nil, remoteNode)
+	err := bus.Connect(context.TODO(), remoteNode)
 	assert.NoError(t, err)
 }
 

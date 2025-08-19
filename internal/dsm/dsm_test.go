@@ -1,6 +1,7 @@
 package dsm
 
 import (
+	"context"
 	"log/slog"
 	"testing"
 
@@ -56,7 +57,7 @@ func TestMemoryManager_CreateArray(t *testing.T) {
 	mm := NewMemoryManager(bus, logger)
 
 	// Create array
-	array, err := mm.CreateArray(nil, 1000)
+	array, err := mm.CreateArray(context.TODO(), 1000)
 
 	// Verify
 	assert.NoError(t, err)
@@ -64,7 +65,7 @@ func TestMemoryManager_CreateArray(t *testing.T) {
 	assert.Equal(t, 1000, array.Length)
 
 	// Verify array was stored
-	storedArray, err := mm.GetArray(nil, array.ID)
+	storedArray, err := mm.GetArray(context.TODO(), array.ID)
 	assert.NoError(t, err)
 	assert.Equal(t, array, storedArray)
 }
@@ -77,19 +78,19 @@ func TestMemoryManager_DeleteArray(t *testing.T) {
 	mm := NewMemoryManager(bus, logger)
 
 	// Create array
-	array, err := mm.CreateArray(nil, 1000)
+	array, err := mm.CreateArray(context.TODO(), 1000)
 	assert.NoError(t, err)
 
 	// Delete array
-	err = mm.DeleteArray(nil, array.ID)
+	err = mm.DeleteArray(context.TODO(), array.ID)
 	assert.NoError(t, err)
 
 	// Try to get deleted array
-	_, err = mm.GetArray(nil, array.ID)
+	_, err = mm.GetArray(context.TODO(), array.ID)
 	assert.Error(t, err)
 
 	// Try to delete non-existent array
-	err = mm.DeleteArray(nil, "non-existent")
+	err = mm.DeleteArray(context.TODO(), "non-existent")
 	assert.Error(t, err)
 }
 

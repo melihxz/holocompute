@@ -1,6 +1,7 @@
 package membership
 
 import (
+	"context"
 	"log/slog"
 	"net"
 	"testing"
@@ -61,7 +62,7 @@ func TestMembership_Join(t *testing.T) {
 	mockHandler.On("OnMemberJoin", remoteMember).Return()
 
 	// Join the remote member
-	membership.Join(nil, remoteMember)
+	membership.Join(context.TODO(), remoteMember)
 
 	// Verify the member was added
 	member, exists := membership.members["remote-node"]
@@ -107,7 +108,7 @@ func TestMembership_Leave(t *testing.T) {
 	mockHandler.On("OnMemberLeave", remoteMember).Return()
 
 	// Leave the remote member
-	membership.Leave(nil, "remote-node")
+	membership.Leave(context.TODO(), "remote-node")
 
 	// Verify the member was removed
 	_, exists := membership.members["remote-node"]

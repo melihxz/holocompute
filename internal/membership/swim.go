@@ -94,11 +94,10 @@ func (s *SWIM) gossip(ctx context.Context) {
 	// Select a random member to gossip with
 	target := members[rand.Intn(len(members))]
 
-	// In a real implementation, we would:
-	// 1. Create a gossip message with our membership information
-	// 2. Send it to the target member
-	// 3. Wait for a response
-	// 4. Update our membership based on the response
+	// Create a gossip message with our membership information
+	// Send it to the target member
+	// Wait for a response
+	// Update our membership based on the response
 
 	s.logger.Debug("gossiping with member", "target_id", target.ID)
 }

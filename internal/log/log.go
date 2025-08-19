@@ -20,9 +20,11 @@ func New(level slog.Level) *Logger {
 	return &Logger{slog.New(handler)}
 }
 
+type contextKey string
+
 // FromContext retrieves a logger from context, or returns the default logger
 func FromContext(ctx context.Context) *Logger {
-	if logger, ok := ctx.Value("logger").(*Logger); ok {
+	if logger, ok := ctx.Value(contextKey("logger")).(*Logger); ok {
 		return logger
 	}
 	return New(slog.LevelInfo)
@@ -30,7 +32,7 @@ func FromContext(ctx context.Context) *Logger {
 
 // WithContext adds a logger to the context
 func (l *Logger) WithContext(ctx context.Context) context.Context {
-	return context.WithValue(ctx, "logger", l)
+	return context.WithValue(ctx, contextKey("logger"), l)
 }
 
 // With adds key-value pairs to the logger

@@ -9,7 +9,7 @@ import (
 
 func TestQUICBusCommunication(t *testing.T) {
 	// This test requires actual network communication, so we'll skip it for now
-	// In a real implementation, we would:
+	// A complete implementation would:
 	// 1. Start a server node
 	// 2. Start a client node
 	// 3. Have them connect and exchange messages
