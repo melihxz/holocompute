@@ -26,7 +26,7 @@ func main() {
 	// Create local node info
 	localNode := hyperbus.NodeInfo{
 		ID:           hyperbus.NodeID(cfg.Node.ID),
-		Address:      nil, // This would be a real address in a complete implementation
+		Address:      nil, // Your Address will be there
 		PublicKey:    []byte("test-public-key"),
 		PQPublicKey:  []byte("test-pq-key"),
 		Capabilities: &proto.NodeCapabilities{CpuCores: 4, MemoryBytes: 1024 * 1024 * 1024},
